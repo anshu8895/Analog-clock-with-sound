@@ -3,10 +3,10 @@
 * {
     margin: 0px;
     padding: 0px;
+    font-family: 'Poppins', sans-serif;
 }
 
 body {
-    font-family: 'Poppins', sans-serif;
     background: rgb(34, 193, 195);
     background: radial-gradient(circle, rgba(34, 193, 195, 1) 0%, rgba(253, 187, 45, 1) 100%);
     position: relative;
@@ -45,7 +45,7 @@ body {
     display: inline-block;
 }
 
-.clock::after{
+.clock::after {
     content: '';
     width: 10px;
     height: 10px;
@@ -54,16 +54,36 @@ body {
     position: absolute;
 }
 
-.needle{
+.needle {
     display: flex;
     justify-content: center;
     align-items: flex-end;
 }
 
-.needle span{
+.needle span {
     width: 5px;
     height: var(--h);
     background-color: var(--clr);
     position: absolute;
     border-radius: 5px;
+}
+
+#playButton {
+    position: fixed;
+    bottom: 80px;
+    /* Adjust as needed */
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px;
+    background-color: rgba(182, 221, 221, 0.291);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+#playButton:hover {
+    background-color: #4CAF50;
+    color: #fff;
 }
