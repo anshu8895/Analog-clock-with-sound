@@ -1,3 +1,27 @@
+document.addEventListener('DOMContentLoaded', function() {
+	let sound; 
+	let isPlaying = false;
+	let button = document.getElementById('playButton');
+
+	button.addEventListener('click', function () {
+		if (!sound) {
+			sound = new Audio('clock-sound.mp3');
+			sound.loop = true; 
+		}
+
+		if (!isPlaying) {
+			sound.play();
+			isPlaying = true;
+			button.innerText = "Pause clock sound";
+		} else {
+			sound.pause();
+			isPlaying = false;
+			button.innerText = "Play clock sound";
+		}
+	});
+});
+
+
 function show_clock() {
 
 	let h = document.getElementsByClassName('hr')[0];
@@ -13,17 +37,5 @@ function show_clock() {
 	h.style.transform = `rotate(${30 * hours + minutes / 2}deg)`;
 	m.style.transform = `rotate(${6 * minutes}deg)`;
 	s.style.transform = `rotate(${6 * seconds}deg)`;
-
-	let sound; 
-
-	document.getElementById('playButton').addEventListener('click', function () {
-		if (!sound) {
-			sound = new Audio('clock-sound.mp3');
-			sound.loop = true; 
-			sound.play();
-		} else {
-			sound.play(); 
-		}
-	});
 }
 setInterval(show_clock, 1000);
