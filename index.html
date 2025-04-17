@@ -6,31 +6,191 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Analog clock with sound</title>
     <link rel="stylesheet" href="style.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
 <body>
-    <div class="clock">
-        <div class="needle hr" style="--h:60px; --clr:white;"><span></span></div>
-        <div class="needle mn" style="--h:80px; --clr:white;"><span></span></div>
-        <div class="needle ss" style="--h:100px; --clr:rgba(216, 156, 52, 0.799);"><span></span></div>
+    <div class="container">
+        <div class="clock-container">
+            <div class="clock">
+                <div class="needle hr" style="--h:60px; --clr:white;"><span></span></div>
+                <div class="needle mn" style="--h:80px; --clr:white;"><span></span></div>
+                <div class="needle ss" style="--h:100px; --clr:rgba(216, 156, 52, 0.799);"><span></span></div>
 
-        <ul>
-            <li style="--i:1"><span>1</span></li>
-            <li style="--i:2"><span>2</span></li>
-            <li style="--i:3"><span>3</span></li>
-            <li style="--i:4"><span>4</span></li>
-            <li style="--i:5"><span>5</span></li>
-            <li style="--i:6"><span>6</span></li>
-            <li style="--i:7"><span>7</span></li>
-            <li style="--i:8"><span>8</span></li>
-            <li style="--i:9"><span>9</span></li>
-            <li style="--i:10"><span>10</span></li>
-            <li style="--i:11"><span>11</span></li>
-            <li style="--i:12"><span>12</span></li>
-        </ul>
+                <ul>
+                    <li style="--i:1"><span>1</span></li>
+                    <li style="--i:2"><span>2</span></li>
+                    <li style="--i:3"><span>3</span></li>
+                    <li style="--i:4"><span>4</span></li>
+                    <li style="--i:5"><span>5</span></li>
+                    <li style="--i:6"><span>6</span></li>
+                    <li style="--i:7"><span>7</span></li>
+                    <li style="--i:8"><span>8</span></li>
+                    <li style="--i:9"><span>9</span></li>
+                    <li style="--i:10"><span>10</span></li>
+                    <li style="--i:11"><span>11</span></li>
+                    <li style="--i:12"><span>12</span></li>
+                </ul>
+            </div>
+            <div class="time-info">
+                <div id="digital-clock">00:00:00</div>
+                <div id="date-display">Wednesday, April 16</div>
+            </div>
+        </div>
+
+        <div class="tab-container">
+            <div class="tabs">
+                <button class="tab-button active" data-tab="main-controls">Clock</button>
+                <button class="tab-button" data-tab="timer-controls">Timer</button>
+                <button class="tab-button" data-tab="stopwatch-controls">Stopwatch</button>
+            </div>
+            
+            <div class="tab-content">
+                <!-- Main Clock Controls Panel -->
+                <div class="tab-pane active" id="main-controls">
+                    <div class="controls-panel">
+                        <div class="control-row">
+                            <div class="control-group">
+                                <label for="sound-options">Choose sound:</label>
+                                <select id="sound-options" class="control-select">
+                                    <option value="assets/clock-sound.mp3">Classic Tick</option>
+                                    <option value="assets/digital-beep.mp3">Digital Beep</option>
+                                    <option value="assets/soft-tick.mp3">Soft Tick</option>
+                                    <option value="generated-soft">Soft Tick (Generated)</option>
+                                    <option value="generated-digital">Digital Beep (Generated)</option>
+                                </select>
+                            </div>
+
+                            <div class="control-group">
+                                <label for="theme-options">Choose theme:</label>
+                                <select id="theme-options" class="control-select">
+                                    <option value="default">Default</option>
+                                    <option value="dark">Dark</option>
+                                    <option value="light">Light</option>
+                                    <option value="colorful">Colorful</option>
+                                    <option value="minimal">Minimal</option>
+                                </select>
+                            </div>
+
+                            <div class="control-group">
+                                <label for="timezone-options">Timezone:</label>
+                                <select id="timezone-options" class="control-select">
+                                    <option value="local">Local Time</option>
+                                    <option value="UTC">UTC</option>
+                                    <option value="EST">New York (EST)</option>
+                                    <option value="PST">Los Angeles (PST)</option>
+                                    <option value="JST">Tokyo (JST)</option>
+                                    <option value="IST">New Delhi (IST)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="control-row">
+                            <button id="playButton" class="control-btn"><i class="fas fa-play"></i> Play clock sound</button>
+                            <button id="fullscreenButton" class="control-btn"><i class="fas fa-expand"></i> Fullscreen</button>
+                        </div>
+                    </div>
+
+                    <div class="alarm-section">
+                        <h3>Set Alarm</h3>
+                        <div class="alarm-controls">
+                            <input type="time" id="alarm-time" class="time-input">
+                            <div class="alarm-btn-group">
+                                <button id="setAlarm" class="control-btn">Set Alarm</button>
+                                <button id="clearAlarm" class="control-btn" disabled>Clear Alarm</button>
+                            </div>
+                        </div>
+                        <div id="alarm-status">No alarm set</div>
+                    </div>
+                </div>
+                
+                <!-- Countdown Timer Panel -->
+                <div class="tab-pane" id="timer-controls">
+                    <div class="timer-display">
+                        <span id="timer-hours">00</span>:<span id="timer-minutes">00</span>:<span id="timer-seconds">00</span>
+                    </div>
+                    
+                    <div class="timer-setup">
+                        <div class="timer-input-group">
+                            <label>Hours</label>
+                            <div class="timer-spinner">
+                                <button class="spinner-btn up" data-target="timer-hours"><i class="fas fa-chevron-up"></i></button>
+                                <div class="input-container">
+                                    <input type="number" id="timer-hours-input" min="0" max="23" value="0">
+                                </div>
+                                <button class="spinner-btn down" data-target="timer-hours"><i class="fas fa-chevron-down"></i></button>
+                            </div>
+                        </div>
+                        
+                        <div class="timer-input-group">
+                            <label>Minutes</label>
+                            <div class="timer-spinner">
+                                <button class="spinner-btn up" data-target="timer-minutes"><i class="fas fa-chevron-up"></i></button>
+                                <div class="input-container">
+                                    <input type="number" id="timer-minutes-input" min="0" max="59" value="0">
+                                </div>
+                                <button class="spinner-btn down" data-target="timer-minutes"><i class="fas fa-chevron-down"></i></button>
+                            </div>
+                        </div>
+                        
+                        <div class="timer-input-group">
+                            <label>Seconds</label>
+                            <div class="timer-spinner">
+                                <button class="spinner-btn up" data-target="timer-seconds"><i class="fas fa-chevron-up"></i></button>
+                                <div class="input-container">
+                                    <input type="number" id="timer-seconds-input" min="0" max="59" value="0">
+                                </div>
+                                <button class="spinner-btn down" data-target="timer-seconds"><i class="fas fa-chevron-down"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="timer-controls">
+                        <button id="start-timer" class="control-btn"><i class="fas fa-play"></i> Start</button>
+                        <button id="pause-timer" class="control-btn" disabled><i class="fas fa-pause"></i> Pause</button>
+                        <button id="reset-timer" class="control-btn" disabled><i class="fas fa-redo"></i> Reset</button>
+                    </div>
+                </div>
+                
+                <!-- Stopwatch Panel -->
+                <div class="tab-pane" id="stopwatch-controls">
+                    <div class="stopwatch-display">
+                        <span id="stopwatch-minutes">00</span>:<span id="stopwatch-seconds">00</span>.<span id="stopwatch-milliseconds">00</span>
+                    </div>
+                    
+                    <div class="lap-times">
+                        <h3>Lap Times</h3>
+                        <ul id="lap-list"></ul>
+                    </div>
+                    
+                    <div class="stopwatch-controls">
+                        <button id="start-stopwatch" class="control-btn"><i class="fas fa-play"></i> Start</button>
+                        <button id="lap-stopwatch" class="control-btn" disabled><i class="fas fa-flag"></i> Lap</button>
+                        <button id="reset-stopwatch" class="control-btn" disabled><i class="fas fa-redo"></i> Reset</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <button id="playButton">Play clock sound</button>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Alarm!</h2>
+            <p>Your alarm time has been reached.</p>
+            <button id="stopAlarm" class="control-btn">Stop Alarm</button>
+        </div>
+    </div>
+
+    <!-- Timer completion modal -->
+    <div id="timer-modal" class="modal">
+        <div class="modal-content">
+            <span class="timer-close">&times;</span>
+            <h2>Time's Up!</h2>
+            <p>Your countdown timer has finished.</p>
+            <button id="stop-timer-alarm" class="control-btn">OK</button>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
